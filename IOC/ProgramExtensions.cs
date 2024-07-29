@@ -6,6 +6,8 @@ using Services.Service;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Repository.Interface;
 using Infrastructure.Repository.Service;
+using Infrastructure.UOW.Interface;
+using Infrastructure.UOW.Service;
 
 namespace IOC
 {
@@ -44,6 +46,7 @@ namespace IOC
             //CONFIGURING SERVICES
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //CONFIGURING REPOSITORIES
             services.AddScoped<IProductRepository, ProductRepository>();

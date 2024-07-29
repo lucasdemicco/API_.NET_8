@@ -15,5 +15,8 @@ namespace Services.Service
 
         public void createCategory(CategoryDto category)
             => _categoryRepository.create(category);
+
+        public void updateCategory(CategoryDto category, int id)
+            => _categoryRepository.updateCategory(category, id);
     }
 }

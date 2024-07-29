@@ -15,7 +15,7 @@ namespace API.Products.Controllers
             _logger = logger;
         }
 
-        [HttpPost("CreateCategory")]
+        [HttpPost("[action]")]
         public IActionResult CreateCategory(CategoryDto category)
         {
             try
@@ -28,7 +28,21 @@ namespace API.Products.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
+        }
 
+        [HttpPut("[action]/{id}")]
+        public IActionResult EditCategory(int id, CategoryDto category)
+        {
+            try
+            {
+                _logger.LogInformation("Atualizando categoria...");
+                _categoryService.updateCategory(category, id);
+                return StatusCode(StatusCodes.Status200OK, $"Categoria {category.Name} atualizada com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
         }
     }
 }

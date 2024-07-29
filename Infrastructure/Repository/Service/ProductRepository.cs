@@ -1,16 +1,19 @@
 ﻿using Domain.Dto;
 using Domain.Entity;
 using Infrastructure.Repository.Interface;
+using Infrastructure.UOW.Interface;
 
 namespace Infrastructure.Repository.Service
 {
     public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _uow;
 
-        public ProductRepository(ApplicationDbContext context)
+        public ProductRepository(ApplicationDbContext context, IUnitOfWork uow)
         {
             _context = context;
+            _uow = uow;
         }
 
         public void CreateProduct(ProductDto product)
@@ -26,7 +29,7 @@ namespace Infrastructure.Repository.Service
             };
 
             _context.Products.Add(entity);
-            _context.SaveChanges();
+            _uow.Commit();
         }
 
         public IList<Product> findAll()
