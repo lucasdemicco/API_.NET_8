@@ -6,5 +6,6 @@ namespace Infrastructure.Repository.Interface
     {
         void create(CategoryDto category);
         void updateCategory(CategoryDto category, int id);
+        void deleteCategory(int id);
     }
 }

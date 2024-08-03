@@ -16,6 +16,9 @@ namespace Services.Service
         public void createCategory(CategoryDto category)
             => _categoryRepository.create(category);
 
+        public void deleteCategory(int id)
+         => _categoryRepository.deleteCategory(id);
+
         public void updateCategory(CategoryDto category, int id)
             => _categoryRepository.updateCategory(category, id);
     }

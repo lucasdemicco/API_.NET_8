@@ -27,6 +27,15 @@ namespace Infrastructure.Repository.Service
             _uow.Commit();
         }
 
+        public void deleteCategory(int id)
+        {
+            Category? category = _context.Categories.FirstOrDefault(c => c.Id == id)
+                ?? throw new InvalidOperationException("Category cannot be null here.");
+
+            _context.Remove(category);
+            _uow?.Commit();
+        }
+
         public void updateCategory(CategoryDto category, int id)
         {
             Category entity = _context.Categories.FirstOrDefault(c => c.Id == id)!;

@@ -6,5 +6,6 @@ namespace Services.Interface
     {
         void createCategory(CategoryDto category);
         void updateCategory(CategoryDto category, int id);
+        void deleteCategory(int id);
     }
 }

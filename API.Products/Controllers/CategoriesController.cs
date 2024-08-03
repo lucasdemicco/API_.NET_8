@@ -1,4 +1,5 @@
 ﻿using Domain.Dto;
+using Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
 
@@ -38,6 +39,21 @@ namespace API.Products.Controllers
                 _logger.LogInformation("Atualizando categoria...");
                 _categoryService.updateCategory(category, id);
                 return StatusCode(StatusCodes.Status200OK, $"Categoria {category.Name} atualizada com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
+        [HttpDelete("[action]/{id}")]
+        public IActionResult DeleteCategory(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Removendo categoria...");
+                _categoryService.deleteCategory(id);
+                return StatusCode(StatusCodes.Status204NoContent, $"Categoria {id} removida com sucesso");
             }
             catch (Exception ex)
             {
