@@ -13,8 +13,21 @@ namespace API.Products.Controllers
             _productService = productService;
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> SendMessageAsync()
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
         [HttpGet("findAllProducts")]
-        public IActionResult findAllProducts()
+        public IActionResult FindAllProducts()
         {
             return Ok(_productService.findAll());
         }

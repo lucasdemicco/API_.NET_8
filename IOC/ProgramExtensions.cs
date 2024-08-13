@@ -8,6 +8,9 @@ using Infrastructure.Repository.Interface;
 using Infrastructure.Repository.Service;
 using Infrastructure.UOW.Interface;
 using Infrastructure.UOW.Service;
+using Services.Interface.External.Interface;
+using Services.Service.External;
+using Domain.Records;
 
 namespace IOC
 {
@@ -38,6 +41,12 @@ namespace IOC
 
         private static IServiceCollection BindConfigurations(this IServiceCollection services, IConfiguration configuration)
         {
+            string exchange = configuration.GetRequiredSection("RabbitMq:Exchange").Value ?? throw new InvalidCastException();
+            string queue = configuration.GetRequiredSection("RabbitMq:Queue").Value ?? throw new InvalidCastException();
+            string routingKey = configuration.GetRequiredSection("RabbitMq:RoutingKey").Value ?? throw new InvalidCastException();
+            RabbitMqInfos rabbitMqInfos = new(exchange, queue, routingKey);
+            services.AddSingleton(rabbitMqInfos);
+
             return services;
         }
 
@@ -47,6 +56,7 @@ namespace IOC
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRabbitMqService, RabbitMqService>();
 
             //CONFIGURING REPOSITORIES
             services.AddScoped<IProductRepository, ProductRepository>();
