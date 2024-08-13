@@ -53,6 +53,8 @@ namespace Services.Service.External
                 var body = args.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 _logger.LogInformation($"Receive message: {message}");
+
+                //Add Deserialize string message to C# object and handle message here
             };
 
             channel.BasicConsume(queueName, true, consumer);
