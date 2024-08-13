@@ -1,14 +1,8 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.Interface.External.Interface
+﻿namespace Services.Interface.External.Interface
 {
     public interface IRabbitMqService
     {
         Task SendMessageAsync(string message);
+        Task ConsumeMessageAsync(string queueName, string routingKey, string exchangeName);
     }
 }
