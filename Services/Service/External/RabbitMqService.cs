@@ -1,5 +1,7 @@
-﻿using Domain.Records;
+﻿using Domain.Dto;
+using Domain.Records;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Services.Interface.External.Interface;
@@ -18,9 +20,9 @@ namespace Services.Service.External
             _rabbitMqInfos = rabbitMqInfos;
         }
 
-        public Task SendMessageAsync(string message)
+        public Task SendMessageAsync(ProductDto product)
         {
-            ArgumentException.ThrowIfNullOrEmpty(message, nameof(message));
+            string message = JsonConvert.SerializeObject(product);
             _logger.LogInformation($"Requuest message: {message}");
 
             var factory = new ConnectionFactory() { HostName = "localhost" };
@@ -36,7 +38,7 @@ namespace Services.Service.External
             return Task.CompletedTask;  
         }
 
-        public Task ConsumeMessagesAsync(string queueName, string routingKey, string exchangeName)
+        public Task ConsumeMessageAsync(string queueName, string routingKey, string exchangeName)
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using var connection = factory.CreateConnection();
